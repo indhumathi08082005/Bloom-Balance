@@ -1,0 +1,2331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bloom & Balance · South Indian meals + daily SMS</title>
+    <style>
+      /* === style.css (same as before, compact) === */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Roboto, sans-serif;
+      }
+      body {
+        background: linear-gradient(145deg, #f0e9db 0%, #d1e0d9 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+      }
+      .main-container {
+        max-width: 1200px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .navbar {
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        flex-wrap: wrap;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(6px);
+        padding: 0.8rem 2rem;
+        border-radius: 60px;
+        margin-bottom: 1rem;
+        border: 1px solid #b6cfc2;
+        position: relative;
+      }
+      .navbar a {
+        text-decoration: none;
+        font-weight: 600;
+        color: #2d5e4c;
+        padding: 0.3rem 0.8rem;
+        border-radius: 40px;
+        transition: 0.2s;
+        font-size: 1.1rem;
+      }
+      .navbar a:hover {
+        background: #3f7b66;
+        color: white;
+      }
+      .logout-btn {
+        background: #d9a577;
+        color: white !important;
+        border: 1px solid #c7a26b;
+      }
+      .logout-btn:hover {
+        background: #c48b5e !important;
+      }
+      .brand-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 0.25rem;
+      }
+      .logo-icon {
+        background: #d9a577;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 14px -6px #9b6e4a;
+        border: 2px solid #f7d9b3;
+      }
+      .logo-icon span {
+        font-size: 2rem;
+        filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+      }
+      .logo-text {
+        font-size: 2.4rem;
+        font-weight: 700;
+        font-style: italic;
+        font-family: "Playfair Display", Georgia, serif;
+        color: #3b5e4c;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .subhead {
+        color: #4c7b67;
+        margin-bottom: 1.8rem;
+        font-size: 1rem;
+        border-left: 4px solid #c7a26b;
+        padding-left: 1rem;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(4px);
+        border-radius: 2rem;
+        padding: 2rem 2.2rem;
+        box-shadow: 0 25px 40px -18px #466b5b;
+        border: 1px solid rgba(160, 210, 190, 0.5);
+        transition: all 0.2s ease;
+      }
+      .card:hover {
+        box-shadow: 0 30px 45px -15px #2d6b58;
+      }
+      h2 {
+        font-weight: 500;
+        color: #1c4e3d;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+      }
+      .input-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .input-field label {
+        font-weight: 600;
+        color: #1e5945;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+      }
+      .input-field input,
+      .input-field select {
+        background: white;
+        border: 1.5px solid #cae3d8;
+        border-radius: 40px;
+        padding: 0.8rem 1.2rem;
+        font-size: 1rem;
+        outline: none;
+      }
+      .input-field input:focus {
+        border-color: #3f9e86;
+        box-shadow: 0 0 0 4px rgba(90, 175, 150, 0.2);
+      }
+      .radio-group {
+        display: flex;
+        gap: 1.8rem;
+        margin-top: 0.3rem;
+        flex-wrap: wrap;
+      }
+      .radio-option {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        cursor: pointer;
+        font-weight: 500;
+        color: #2b6b56;
+      }
+      .btn {
+        background: #3f7b66;
+        border: none;
+        color: white;
+        font-weight: 600;
+        font-size: 1.2rem;
+        padding: 0.9rem 2.2rem;
+        border-radius: 60px;
+        cursor: pointer;
+        transition: 0.2s;
+        box-shadow: 0 10px 18px -8px #1f5a4b;
+        border: 1px solid #72bbaa;
+        width: fit-content;
+      }
+      .btn:hover {
+        background: #4f947e;
+        transform: scale(1.02);
+      }
+      .error-message {
+        background: #ffe2d6;
+        color: #b13e3e;
+        padding: 0.9rem 1.5rem;
+        border-radius: 50px;
+        margin-top: 1.8rem;
+        display: none;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .result-card {
+        margin-top: 1rem;
+        background: #ffffffd9;
+        border: 2px solid #b7dfd0;
+        display: none;
+      }
+      .result-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+      }
+      .badge {
+        background: #defff0;
+        padding: 0.4rem 1.2rem;
+        border-radius: 60px;
+        color: #1b755b;
+        font-weight: 600;
+        border: 1px solid #a0e0cb;
+      }
+      .result-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+      .result-item {
+        background: #effaf5;
+        border-radius: 1.5rem;
+        padding: 1.2rem 1.4rem;
+        border-left: 6px solid #5fb49c;
+      }
+      .result-item.full-width {
+        grid-column: span 2;
+      }
+      .weekly-plan {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+      .day-card {
+        background: #d9f0e6;
+        border-radius: 1.2rem;
+        padding: 0.8rem;
+        border: 1px solid #9bc6b6;
+        box-shadow: 0 4px 8px #b8d9ce;
+      }
+      .day-card strong {
+        display: block;
+        background: #3f7b66;
+        color: white;
+        padding: 0.2rem;
+        border-radius: 30px;
+        text-align: center;
+        margin-bottom: 0.6rem;
+        font-size: 0.9rem;
+      }
+      .doctor-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+      .doctor-card {
+        background: #e5f4ee;
+        border-radius: 1.2rem;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .doctor-avatar {
+        background: #58a28b;
+        color: white;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1.3rem;
+      }
+      .whatsapp-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: #25d366;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+      }
+      .tracker-days {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        margin: 1rem 0;
+      }
+      .tracker-day {
+        background: white;
+        border-radius: 40px;
+        padding: 0.5rem 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        box-shadow: 0 4px 8px #b0d3c4;
+      }
+      .btn-reset {
+        background: #b8dfd0;
+        border: none;
+        color: #1d604b;
+        font-weight: 600;
+        padding: 0.5rem 1.5rem;
+        border-radius: 40px;
+        cursor: pointer;
+        margin: 0 auto;
+      }
+      .product-tag {
+        background: #c6f0e1;
+        border-radius: 30px;
+        padding: 0.3rem 1rem;
+        display: inline-block;
+        margin: 0.2rem;
+        cursor: pointer;
+        border: 1px solid #5fb49c;
+      }
+      .product-tag:hover {
+        background: #a1e0cb;
+      }
+      .reminder-banner {
+        background: #e0f2e9;
+        border-radius: 40px;
+        padding: 0.5rem 1.2rem;
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        border: 1px solid #81b9a6;
+      }
+      .disclaimer {
+        margin-top: 2rem;
+        background: #e1f3ed;
+        border-radius: 40px;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.85rem;
+        color: #266653;
+        text-align: center;
+        border: 1px dashed #5fa390;
+      }
+      hr {
+        border: none;
+        border-top: 2px dotted #a3d6c5;
+        margin: 1rem 0;
+      }
+      .phone-input-group {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+      }
+      .phone-input-group input {
+        flex: 1;
+        min-width: 200px;
+        border-radius: 40px;
+        border: 1.5px solid #cae3d8;
+        padding: 0.6rem 1.2rem;
+      }
+      .small-btn {
+        background: #b8dfd0;
+        border: none;
+        color: #1d604b;
+        padding: 0.5rem 1.2rem;
+        border-radius: 40px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      /* interactive wellness tips section */
+      .wellness-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .wellness-card {
+        background: #f9f3e7;
+        border-radius: 1.5rem;
+        padding: 1.2rem;
+        border-left: 6px solid #c7a26b;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .wellness-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px -10px #7b6b4f;
+      }
+      .wellness-card h4 {
+        color: #2d5e4c;
+        margin-bottom: 0.5rem;
+      }
+      .wellness-card p {
+        font-size: 0.9rem;
+        color: #3e6655;
+      }
+      /* Login page styles */
+      .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, #f0e9db 0%, #d1e0d9 100%);
+        padding: 1.5rem;
+      }
+      .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(4px);
+        border-radius: 2rem;
+        padding: 2.5rem;
+        box-shadow: 0 25px 40px -18px #466b5b;
+        border: 1px solid rgba(160, 210, 190, 0.5);
+        max-width: 450px;
+        width: 100%;
+        text-align: center;
+      }
+      .login-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+      }
+      .login-icon {
+        background: #d9a577;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 14px -6px #9b6e4a;
+        border: 2px solid #f7d9b3;
+      }
+      .login-icon span {
+        font-size: 2.5rem;
+      }
+      .login-title {
+        font-size: 2rem;
+        font-weight: 700;
+        font-style: italic;
+        font-family: "Playfair Display", Georgia, serif;
+        color: #3b5e4c;
+      }
+      .login-subtitle {
+        color: #4c7b67;
+        margin-bottom: 2rem;
+        font-size: 1rem;
+      }
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .login-input {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border: 2px solid #cae3d8;
+        border-radius: 50px;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s;
+      }
+      .login-input:focus {
+        border-color: #3f9e86;
+        box-shadow: 0 0 0 4px rgba(90, 175, 150, 0.2);
+      }
+      .login-btn {
+        background: #3f7b66;
+        color: white;
+        border: none;
+        padding: 1rem;
+        border-radius: 50px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 10px 18px -8px #1f5a4b;
+        border: 1px solid #72bbaa;
+      }
+      .login-btn:hover {
+        background: #4f947e;
+        transform: scale(1.02);
+      }
+      .login-error {
+        color: #b13e3e;
+        background: #ffe2d6;
+        padding: 0.8rem;
+        border-radius: 50px;
+        display: none;
+      }
+      .main-page {
+        display: none;
+      }
+      .user-greeting {
+        color: #2d5e4c;
+        font-weight: 600;
+        margin-right: 1rem;
+        padding: 0.3rem 1rem;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 40px;
+      }
+      /* Enhanced skin and hair sections */
+      .routine-steps {
+        background: #f0f9f4;
+        padding: 1rem;
+        border-radius: 1rem;
+        margin: 1rem 0;
+      }
+      .routine-steps ol {
+        margin-left: 1.5rem;
+        color: #1e5945;
+      }
+      .routine-steps li {
+        margin-bottom: 0.5rem;
+      }
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+      .product-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 0.8rem;
+        text-align: center;
+        border: 1px solid #9bc6b6;
+      }
+      .product-card button {
+        background: #3f7b66;
+        color: white;
+        border: none;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        margin-top: 0.5rem;
+        cursor: pointer;
+        font-size: 0.8rem;
+      }
+      .product-card button:hover {
+        background: #4f947e;
+      }
+      .morning-routine,
+      .night-routine {
+        background: #e5f4ee;
+        border-radius: 1rem;
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="login-container">
+      <div class="login-card">
+        <div class="login-logo">
+          <div class="login-icon"><span>🌸</span></div>
+          <div class="login-title">Bloom & Balance</div>
+        </div>
+        <div class="login-subtitle">Welcome back! Please login to continue</div>
+        <form id="loginForm" class="login-form">
+          <input
+            type="text"
+            id="loginName"
+            class="login-input"
+            placeholder="Enter your full name"
+            required
+          />
+          <input
+            type="email"
+            id="loginEmail"
+            class="login-input"
+            placeholder="Enter your email"
+            required
+          />
+          <div id="loginError" class="login-error">
+            Please fill in all fields
+          </div>
+          <button type="submit" class="login-btn">🌸 Start Your Journey</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MAIN PAGE (hidden initially) -->
+    <div id="mainPage" class="main-container" style="display: none">
+      <div class="navbar">
+        <span id="userGreeting" class="user-greeting"></span>
+        <a href="#weightGuidance">⚖️ Weight Guidance</a>
+        <a href="#skinCare">🧴 Skin Care</a>
+        <a href="#hairCare">💇‍♀️ Hair Care</a>
+        <a href="#" id="logoutLink" class="logout-btn">🚪 Logout</a>
+      </div>
+      <div class="brand-logo">
+        <div class="logo-icon"><span>🌸</span></div>
+        <div class="logo-text">Bloom & Balance</div>
+      </div>
+      <div class="subhead">south indian meal · daily 7am sms · tracker</div>
+
+      <!-- WEIGHT GUIDANCE CARD (form + result) -->
+      <div id="weightGuidance" class="card">
+        <h2 style="margin-bottom: 1.5rem">⚖️ Weight guidance</h2>
+        <form id="healthForm">
+          <div class="form-grid">
+            <div class="input-field">
+              <label>Age</label
+              ><input type="number" id="age" placeholder="28" />
+            </div>
+            <div class="input-field">
+              <label>Gender</label
+              ><select id="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <div class="input-field">
+              <label>Height (cm)</label
+              ><input type="number" id="height" placeholder="170" />
+            </div>
+            <div class="input-field">
+              <label>Weight (kg)</label
+              ><input type="number" id="weight" placeholder="70" />
+            </div>
+            <div class="input-field">
+              <label>Activity</label
+              ><select id="activity">
+                <option value="low">Low</option>
+                <option value="moderate">Moderate</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div class="input-field">
+              <label>Preference</label
+              ><select id="foodPref">
+                <option value="veg">Vegetarian</option>
+                <option value="nonveg">Non-Veg</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin: 1.8rem 0 1rem">
+            <span style="font-weight: 600; color: #1e5945; margin-right: 2rem"
+              >Your goal:</span
+            >
+            <div class="radio-group">
+              <label class="radio-option"
+                ><input type="radio" name="goal" value="gain" required /> ⬆️
+                Gain</label
+              ><label class="radio-option"
+                ><input type="radio" name="goal" value="lose" required /> ⬇️
+                Lose</label
+              >
+            </div>
+          </div>
+          <button type="submit" class="btn">🔍 Get my plan →</button>
+          <div id="formError" class="error-message"></div>
+        </form>
+      </div>
+
+      <!-- RESULT CARD (hidden initially) -->
+      <div id="resultCard" class="card result-card">
+        <div class="result-header">
+          <h2>🧬 your health & weekly roadmap</h2>
+          <div class="badge" id="bmiBadge"></div>
+        </div>
+        <div class="result-grid">
+          <div class="result-item">
+            <h3>📊 BMI</h3>
+            <p id="bmiValue"></p>
+            <p id="bmiClass"></p>
+          </div>
+          <div class="result-item">
+            <h3>🔥 daily calories</h3>
+            <p id="calorieTarget"></p>
+            <p id="maintenanceInfo"></p>
+          </div>
+          <div class="result-item">
+            <h3>🎯 healthy weight</h3>
+            <p id="weightRange"></p>
+          </div>
+          <div class="result-item">
+            <h3>🥗 diet focus</h3>
+            <p id="dietSuggest"></p>
+          </div>
+          <div class="result-item">
+            <h3>🏋️ exercise</h3>
+            <p id="exerciseSuggest"></p>
+          </div>
+        </div>
+
+        <!-- WEEKLY MEAL PLAN – SOUTH INDIAN -->
+        <div class="result-item full-width" style="background: #e2f7f0">
+          <h3>📅 south indian weekly meal chart</h3>
+          <div id="weeklyMealContainer" class="weekly-plan"></div>
+          <p style="font-size: 0.85rem; color: #2b705b">
+            ⋆ traditional south indian meals – adjust portions to calorie
+            target.
+          </p>
+        </div>
+
+        <!-- PROGRESS TRACKER with phone number input for daily SMS -->
+        <div
+          class="result-item full-width tracker-container"
+          style="background: #f0f9f4"
+        >
+          <h3>✅ weekly progress tracker + daily 7am SMS reminder</h3>
+          <div id="trackerDays" class="tracker-days"></div>
+          <div class="tracker-progress">
+            Progress: <span id="progressCount">0/7</span> days completed
+          </div>
+          <button id="resetTrackerBtn" class="btn-reset">↻ reset checks</button>
+
+          <!-- Phone number input for SMS reminder -->
+          <div
+            style="
+              margin-top: 1.5rem;
+              border-top: 1px dashed #9bc6b6;
+              padding-top: 1rem;
+            "
+          >
+            <label style="font-weight: 600; color: #1e5945"
+              >📱 get daily 7am SMS reminder for meal:</label
+            >
+            <div class="phone-input-group">
+              <input
+                type="tel"
+                id="smsPhone"
+                placeholder="+91 98765 43210"
+                value=""
+              />
+              <button id="activateSmsBtn" class="small-btn">activate</button>
+            </div>
+            <div
+              id="smsStatus"
+              class="reminder-banner"
+              style="margin-top: 0.8rem; display: none"
+            >
+              <span>⏰</span><span id="smsMessage"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DOCTORS & LIFESTYLE -->
+        <div class="result-item full-width" style="background: #effaf0">
+          <h3>🩺 nearby consultants</h3>
+          <div id="doctorContainer" class="doctor-list"></div>
+        </div>
+        <div class="result-item full-width">
+          <h3>💡 lifestyle tips</h3>
+          <p id="lifestyleTips"></p>
+        </div>
+        <hr />
+        <div class="disclaimer">
+          ⚕️ general guidance only – daily SMS simulated at 7am (browser check).
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SKIN CARE SECTION - ENHANCED -->
+      <div id="skinCare" class="card" style="background: #fef3e9">
+        <h2>🧴 Skin care essentials</h2>
+        <div class="concern-selector">
+          <label for="skinSelect" style="font-weight: 600; color: #1e5945"
+            >Select your skin concern:</label
+          >
+          <select id="skinSelect" style="width: 100%; margin-top: 0.5rem">
+            <option value="" disabled selected>— choose a skin issue —</option>
+            <option value="acne">🌋 Acne & Breakouts</option>
+            <option value="tanning">☀️ Tanning & Sun Damage</option>
+            <option value="pigmentation">🎭 Pigmentation & Dark Spots</option>
+            <option value="dryness">💧 Dryness & Dehydration</option>
+            <option value="oily">💦 Oily Skin</option>
+            <option value="aging">⏳ Anti-aging & Wrinkles</option>
+            <option value="pores">🔍 Large Pores</option>
+            <option value="sensitive">🌸 Sensitive Skin</option>
+          </select>
+        </div>
+        <div id="skinAdvice" class="advice-box">
+          <p style="color: #2b6b56; text-align: center; padding: 1rem">
+            👆 Select a concern above to see a complete step-by-step routine and
+            recommended products.
+          </p>
+          <div id="skinProductInfo" class="product-info-panel"></div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE HAIR CARE SECTION - ENHANCED -->
+      <div id="hairCare" class="card" style="background: #f0ecf9">
+        <h2>💇‍♀️ Hair care must‑haves</h2>
+        <div class="concern-selector">
+          <label for="hairSelect" style="font-weight: 600; color: #1e5945"
+            >Select your hair concern:</label
+          >
+          <select id="hairSelect" style="width: 100%; margin-top: 0.5rem">
+            <option value="" disabled selected>— choose a hair issue —</option>
+            <option value="hairfall">🍂 Hair Fall & Thinning</option>
+            <option value="splitends">✂️ Split Ends & Breakage</option>
+            <option value="dandruff">❄️ Dandruff & Itchy Scalp</option>
+            <option value="dryscalp">🏜️ Dry Scalp</option>
+            <option value="oily scalp">💧 Oily Scalp</option>
+            <option value="frizz">🌀 Frizz & Unmanageable Hair</option>
+            <option value="damage">🔥 Damaged & Over-processed Hair</option>
+            <option value="growth">🌱 Hair Growth</option>
+          </select>
+        </div>
+        <div id="hairAdvice" class="advice-box">
+          <p style="color: #2b6b56; text-align: center; padding: 1rem">
+            👆 Select a concern above to see a complete hair care routine and
+            recommended products.
+          </p>
+          <div id="hairProductInfo" class="product-info-panel"></div>
+        </div>
+      </div>
+
+      <!-- NEW INTERACTIVE WELLNESS TIPS SECTION -->
+      <div class="card" style="background: #f4f0e6">
+        <h2>🌿 Interactive wellness tips</h2>
+        <p style="margin-bottom: 1rem; color: #1e5945">
+          Click on any card to reveal a practical tip.
+        </p>
+        <div class="wellness-grid" id="wellnessGrid">
+          <!-- dynamically populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        // LOGIN FUNCTIONALITY
+        const loginPage = document.getElementById("loginPage");
+        const mainPage = document.getElementById("mainPage");
+        const loginForm = document.getElementById("loginForm");
+        const loginName = document.getElementById("loginName");
+        const loginEmail = document.getElementById("loginEmail");
+        const loginError = document.getElementById("loginError");
+        const logoutLink = document.getElementById("logoutLink");
+        const userGreeting = document.getElementById("userGreeting");
+
+        // Check if user is already logged in
+        const isLoggedIn = localStorage.getItem("bloomLoggedIn");
+        const savedName = localStorage.getItem("bloomUserName");
+
+        if (isLoggedIn === "true" && savedName) {
+          loginPage.style.display = "none";
+          mainPage.style.display = "grid";
+          userGreeting.textContent = `👋 Hi, ${savedName.split(" ")[0]}`;
+        }
+
+        loginForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const name = loginName.value.trim();
+          const email = loginEmail.value.trim();
+
+          if (!name || !email) {
+            loginError.style.display = "block";
+            return;
+          }
+
+          // Simple email validation
+          if (!email.includes("@") || !email.includes(".")) {
+            loginError.textContent = "Please enter a valid email address";
+            loginError.style.display = "block";
+            return;
+          }
+
+          // Store user info and login status
+          localStorage.setItem("bloomUserName", name);
+          localStorage.setItem("bloomUserEmail", email);
+          localStorage.setItem("bloomLoggedIn", "true");
+
+          // Hide login page and show main page
+          loginPage.style.display = "none";
+          mainPage.style.display = "grid";
+          userGreeting.textContent = `👋 Hi, ${name.split(" ")[0]}`;
+        });
+
+        // Logout functionality
+        logoutLink.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          // Clear login status but keep SMS phone number if user wants
+          localStorage.removeItem("bloomLoggedIn");
+          localStorage.removeItem("bloomUserName");
+          localStorage.removeItem("bloomUserEmail");
+
+          // Show login page, hide main page
+          loginPage.style.display = "flex";
+          mainPage.style.display = "none";
+
+          // Clear login form
+          loginName.value = "";
+          loginEmail.value = "";
+          loginError.style.display = "none";
+        });
+
+        // ---------- SOUTH INDIAN MEAL PLANS ----------
+        const southIndianMeals = {
+          gainVeg: [
+            {
+              breakfast: "Idli (3) + sambhar + coconut chutney",
+              lunch: "Lemon rice + potato fry + curd",
+              snack: "Banana + glass of milk",
+              dinner: "Dosa (2) + tomato chutney + sambhar",
+            },
+            {
+              breakfast: "Pongal + ghee + vada (1)",
+              lunch: "Curd rice + pickled mango",
+              snack: "Roasted channa + jaggery",
+              dinner: "Chapati + vegetable kurma",
+            },
+            {
+              breakfast: "Upma (sooji) + coconut chutney",
+              lunch: "Tomato rice + fried papad",
+              snack: "Sweet pongal (small)",
+              dinner: "Rava dosa + potato masala",
+            },
+            {
+              breakfast: "Poori + potato masala",
+              lunch: "Sambhar rice + carrot salad",
+              snack: "Milk + banana",
+              dinner: "Onion uttapam + coconut chutney",
+            },
+            {
+              breakfast: "Wheat dosa + peanut chutney",
+              lunch: "Bisi bele bath + boondi",
+              snack: "Peanuts + jaggery",
+              dinner: "Vegetable biryani + raita",
+            },
+            {
+              breakfast: "Medu vada (2) + sambhar",
+              lunch: "Coconut rice + curd",
+              snack: "Dates + nuts",
+              dinner: "Set dosa + vegetable sagu",
+            },
+            {
+              breakfast: "Semolina upma + ghee",
+              lunch: "Mysore masala dosa",
+              snack: "Filter coffee + banana",
+              dinner: "Chapati + paneer butter masala",
+            },
+          ],
+          loseVeg: [
+            {
+              breakfast: "Oats upma (no oil)",
+              lunch: "Steamed rice + thin sambhar + cabbage",
+              snack: "Cucumber slices",
+              dinner: "Ragi dosa + mint chutney",
+            },
+            {
+              breakfast: "Brown rice idli (2) + chutney",
+              lunch: "Vegetable khichdi",
+              snack: "Orange",
+              dinner: "Grilled vegetables + chapati",
+            },
+            {
+              breakfast: "Moong dal chilla",
+              lunch: "Curd rice + bottle gourd curry",
+              snack: "Sprouts salad",
+              dinner: "Tomato soup + grilled dosa",
+            },
+            {
+              breakfast: "Fruit bowl (papaya, apple)",
+              lunch: "Quinoa pongal",
+              snack: "Roasted channa",
+              dinner: "Lentil curry + brown rice",
+            },
+            {
+              breakfast: "Ragi malt (porridge)",
+              lunch: "Mushroom curry + chapati",
+              snack: "Buttermilk",
+              dinner: "Vegetable stew + 1 dosa",
+            },
+            {
+              breakfast: "Steamed corn + tea",
+              lunch: "Cabbage + moong dal",
+              snack: "Coconut water",
+              dinner: "Mixed vegetable soup",
+            },
+            {
+              breakfast: "Pesarattu (green gram dosa)",
+              lunch: "Sambhar + bottle gourd",
+              snack: "Apple",
+              dinner: "Grilled paneer salad",
+            },
+          ],
+          gainNonVeg: [
+            {
+              breakfast: "Egg dosa (2 eggs)",
+              lunch: "Chicken biryani + raita",
+              snack: "Protein shake",
+              dinner: "Grilled fish + steamed rice",
+            },
+            {
+              breakfast: "Omelette (3 eggs) + toast",
+              lunch: "Mutton curry + rice",
+              snack: "Banana + milk",
+              dinner: "Pepper chicken + chapati",
+            },
+            {
+              breakfast: "Scrambled eggs + upma",
+              lunch: "Prawn curry + rice",
+              snack: "Dry fruits",
+              dinner: "Fish fry + curd rice",
+            },
+            {
+              breakfast: "Boiled eggs (2) + parotta",
+              lunch: "Chicken 65 + lemon rice",
+              snack: "Protein bar",
+              dinner: "Egg curry + chapati",
+            },
+            {
+              breakfast: "Chicken sausages + bread",
+              lunch: "Mutton biryani",
+              snack: "Nuts",
+              dinner: "Tandoori chicken + salad",
+            },
+            {
+              breakfast: "Omelette + dosa",
+              lunch: "Fish curry + rice",
+              snack: "Milkshake",
+              dinner: "Chicken lollipop + veggies",
+            },
+            {
+              breakfast: "Egg bhurji + paratha",
+              lunch: "Pepper mutton + rice",
+              snack: "Boiled eggs",
+              dinner: "Grilled prawns + rice",
+            },
+          ],
+          loseNonVeg: [
+            {
+              breakfast: "Boiled eggs (2) + orange",
+              lunch: "Grilled chicken salad",
+              snack: "Protein shake",
+              dinner: "Steamed fish + veggies",
+            },
+            {
+              breakfast: "Omelette (2 eggs, veggies)",
+              lunch: "Chicken soup",
+              snack: "Cucumber sticks",
+              dinner: "Tandoori chicken (no skin)",
+            },
+            {
+              breakfast: "Scrambled eggs + spinach",
+              lunch: "Fish curry + brown rice",
+              snack: "Buttermilk",
+              dinner: "Grilled prawns + salad",
+            },
+            {
+              breakfast: "Egg white omelette",
+              lunch: "Mutton stew",
+              snack: "Apple",
+              dinner: "Chicken tikka + salad",
+            },
+            {
+              breakfast: "Smoothie (whey + berries)",
+              lunch: "Tuna salad",
+              snack: "Almonds",
+              dinner: "Baked fish + steamed veg",
+            },
+            {
+              breakfast: "2 boiled eggs + coffee",
+              lunch: "Chicken breast + broccoli",
+              snack: "Orange",
+              dinner: "Fish curry + cabbage",
+            },
+            {
+              breakfast: "Cottage cheese + eggs",
+              lunch: "Mutton soup",
+              snack: "Cucumber",
+              dinner: "Grilled chicken + sautéed spinach",
+            },
+          ],
+        };
+
+        // ---------- ENHANCED SKIN ADVICE WITH COMPLETE ROUTINES ----------
+        const skinAdvice = {
+          acne: {
+            title: "🌋 Acne & Breakouts Routine",
+            description: "Complete daily routine for acne-prone skin",
+            morning: [
+              "Cleanse with salicylic acid face wash",
+              "Apply niacinamide serum to control oil",
+              "Use oil-free moisturizer",
+              "Apply SPF 50+ sunscreen (MUST for acne scars)",
+            ],
+            night: [
+              "Double cleanse (oil cleanser + salicylic acid wash)",
+              "Apply benzoyl peroxide gel (spot treatment)",
+              "Use adapalene cream (retinoid) - start twice a week",
+              "Apply non-comedogenic night cream",
+            ],
+            weekly: [
+              "Exfoliate with salicylic acid toner (2-3 times/week)",
+              "Use clay mask (once/week) to absorb excess oil",
+              "Never pick or pop pimples",
+            ],
+            products: [
+              {
+                name: "Salicylic acid cleanser",
+                purplleLink:
+                  "https://www.purplle.com/search?q=salicylic+acid+cleanser",
+              },
+              {
+                name: "Benzoyl peroxide gel",
+                purplleLink:
+                  "https://www.purplle.com/search?q=benzoyl+peroxide+gel",
+              },
+              {
+                name: "Adapalene cream",
+                purplleLink: "https://www.purplle.com/search?q=adapalene+cream",
+              },
+              {
+                name: "Oil-free moisturizer",
+                purplleLink:
+                  "https://www.purplle.com/search?q=oil+free+moisturizer",
+              },
+              {
+                name: "SPF 50+ sunscreen",
+                purplleLink:
+                  "https://www.purplle.com/search?q=spf+50+sunscreen",
+              },
+              {
+                name: "Niacinamide serum",
+                purplleLink:
+                  "https://www.purplle.com/search?q=niacinamide+serum",
+              },
+              {
+                name: "Clay mask",
+                purplleLink: "https://www.purplle.com/search?q=clay+mask",
+              },
+            ],
+            tips: "Change pillowcases twice weekly, avoid touching face, drink plenty of water",
+          },
+          tanning: {
+            title: "☀️ Tanning & Sun Damage Routine",
+            description: "Repair sun damage and prevent further tanning",
+            morning: [
+              "Cleanse with gentle face wash",
+              "Apply vitamin C serum (brightens and protects)",
+              "Use niacinamide moisturizer",
+              "Apply SPF 50+ PA++++ sunscreen - REAPPLY every 2 hours",
+            ],
+            night: [
+              "Cleanse with gentle cleanser",
+              "Use glycolic acid toner (3x/week)",
+              "Apply kojic acid cream for pigmentation",
+              "Use soothing aloe vera gel",
+            ],
+            weekly: [
+              "Use lactic acid peel (once/week) for exfoliation",
+              "Apply cooling aloe vera mask",
+              "Avoid direct sun exposure 10am-4pm",
+            ],
+            products: [
+              {
+                name: "Aloe vera gel",
+                purplleLink: "https://www.purplle.com/search?q=aloe+vera+gel",
+              },
+              {
+                name: "Vitamin C serum",
+                purplleLink: "https://www.purplle.com/search?q=vitamin+c+serum",
+              },
+              {
+                name: "Glycolic acid toner",
+                purplleLink:
+                  "https://www.purplle.com/search?q=glycolic+acid+toner",
+              },
+              {
+                name: "Broad-spectrum SPF 50+",
+                purplleLink:
+                  "https://www.purplle.com/search?q=spf+50+sunscreen",
+              },
+              {
+                name: "Niacinamide moisturizer",
+                purplleLink:
+                  "https://www.purplle.com/search?q=niacinamide+moisturizer",
+              },
+              {
+                name: "Kojic acid cream",
+                purplleLink:
+                  "https://www.purplle.com/search?q=kojic+acid+cream",
+              },
+              {
+                name: "Lactic acid peel",
+                purplleLink:
+                  "https://www.purplle.com/search?q=lactic+acid+peel",
+              },
+            ],
+            tips: "Wear hat and sunglasses outdoors, use umbrella on sunny days",
+          },
+          pigmentation: {
+            title: "🎭 Pigmentation & Dark Spots Routine",
+            description: "Target dark spots and even out skin tone",
+            morning: [
+              "Cleanse with mild face wash",
+              "Apply vitamin C serum (brightening)",
+              "Use niacinamide moisturizer",
+              "Apply SPF 50+ sunscreen (CRITICAL for pigmentation)",
+            ],
+            night: [
+              "Cleanse thoroughly",
+              "Apply kojic acid cream (lightening agent)",
+              "Use glycolic acid toner (alternate nights)",
+              "Apply tranexamic acid serum",
+            ],
+            weekly: [
+              "Use kojic acid face mask (once/week)",
+              "Exfoliate with lactic acid (2x/week)",
+              "Never skip sunscreen - even indoors",
+            ],
+            products: [
+              {
+                name: "Niacinamide serum",
+                purplleLink:
+                  "https://www.purplle.com/search?q=niacinamide+serum",
+              },
+              {
+                name: "Kojic acid cream",
+                purplleLink:
+                  "https://www.purplle.com/search?q=kojic+acid+cream",
+              },
+              {
+                name: "Glycolic acid toner",
+                purplleLink:
+                  "https://www.purplle.com/search?q=glycolic+acid+toner",
+              },
+              {
+                name: "Vitamin C serum",
+                purplleLink: "https://www.purplle.com/search?q=vitamin+c+serum",
+              },
+              {
+                name: "Mineral sunscreen SPF 50",
+                purplleLink:
+                  "https://www.purplle.com/search?q=mineral+sunscreen",
+              },
+              {
+                name: "Tranexamic acid serum",
+                purplleLink:
+                  "https://www.purplle.com/search?q=tranexamic+acid+serum",
+              },
+              {
+                name: "Kojic acid face mask",
+                purplleLink: "https://www.purplle.com/search?q=kojic+acid+mask",
+              },
+            ],
+            tips: "Be patient - pigmentation takes 3-6 months to fade, always wear sunscreen",
+          },
+          dryness: {
+            title: "💧 Dryness & Dehydration Routine",
+            description: "Intense hydration for dry, flaky skin",
+            morning: [
+              "Wash with hydrating, sulfate-free cleanser",
+              "Apply hyaluronic acid serum on damp skin",
+              "Use ceramide moisturizer",
+              "Apply SPF 30+ moisturizing sunscreen",
+            ],
+            night: [
+              "Cleanse with hydrating cleanser",
+              "Apply facial oil (squalane/rosehip)",
+              "Use rich night cream with ceramides",
+              "Add few drops of facial oil on dry patches",
+            ],
+            weekly: [
+              "Use hydrating sheet mask (2-3 times/week)",
+              "Apply overnight hydration mask",
+              "Use humidifier in bedroom",
+            ],
+            products: [
+              {
+                name: "Hydrating cleanser",
+                purplleLink:
+                  "https://www.purplle.com/search?q=hydrating+cleanser",
+              },
+              {
+                name: "Hyaluronic acid serum",
+                purplleLink:
+                  "https://www.purplle.com/search?q=hyaluronic+acid+serum",
+              },
+              {
+                name: "Ceramide moisturizer",
+                purplleLink:
+                  "https://www.purplle.com/search?q=ceramide+moisturizer",
+              },
+              {
+                name: "Squalane oil",
+                purplleLink: "https://www.purplle.com/search?q=squalane+oil",
+              },
+              {
+                name: "Overnight hydrating mask",
+                purplleLink:
+                  "https://www.purplle.com/search?q=overnight+hydrating+mask",
+              },
+              {
+                name: "Rosehip oil",
+                purplleLink: "https://www.purplle.com/search?q=rosehip+oil",
+              },
+              {
+                name: "Hydrating sheet mask",
+                purplleLink:
+                  "https://www.purplle.com/search?q=hydrating+sheet+mask",
+              },
+            ],
+            tips: "Drink 8+ glasses water, avoid hot showers, use mild cleansers only",
+          },
+          oily: {
+            title: "💦 Oily Skin Routine",
+            description: "Control excess oil and shine",
+            morning: [
+              "Cleanse with salicylic acid face wash",
+              "Apply niacinamide serum (oil control)",
+              "Use oil-free gel moisturizer",
+              "Apply matte finish sunscreen",
+            ],
+            night: [
+              "Double cleanse with oil cleanser + foaming wash",
+              "Use salicylic acid toner",
+              "Apply retinol (2-3x/week)",
+              "Use lightweight night gel",
+            ],
+            weekly: [
+              "Use charcoal/clay mask (2x/week)",
+              "Exfoliate with salicylic acid (2x/week)",
+              "Use blotting papers during day",
+            ],
+            products: [
+              {
+                name: "Salicylic acid cleanser",
+                purplleLink:
+                  "https://www.purplle.com/search?q=salicylic+acid+cleanser",
+              },
+              {
+                name: "Niacinamide serum",
+                purplleLink:
+                  "https://www.purplle.com/search?q=niacinamide+serum",
+              },
+              {
+                name: "Oil-free gel moisturizer",
+                purplleLink:
+                  "https://www.purplle.com/search?q=oil+free+gel+moisturizer",
+              },
+              {
+                name: "Matte sunscreen",
+                purplleLink: "https://www.purplle.com/search?q=matte+sunscreen",
+              },
+              {
+                name: "Salicylic acid toner",
+                purplleLink:
+                  "https://www.purplle.com/search?q=salicylic+acid+toner",
+              },
+              {
+                name: "Retinol serum",
+                purplleLink: "https://www.purplle.com/search?q=retinol+serum",
+              },
+              {
+                name: "Charcoal clay mask",
+                purplleLink:
+                  "https://www.purplle.com/search?q=charcoal+clay+mask",
+              },
+            ],
+            tips: "Don't over-cleanse (strips natural oils), use blotting papers, avoid heavy creams",
+          },
+          aging: {
+            title: "⏳ Anti-aging & Wrinkles Routine",
+            description: "Reduce fine lines and improve skin elasticity",
+            morning: [
+              "Cleanse with gentle face wash",
+              "Apply vitamin C serum (antioxidant protection)",
+              "Use peptide moisturizer",
+              "Apply SPF 50+ sunscreen (prevents aging)",
+            ],
+            night: [
+              "Cleanse thoroughly",
+              "Apply retinol serum (start 2x/week)",
+              "Use rich night cream with peptides",
+              "Apply eye cream",
+            ],
+            weekly: [
+              "Use AHA peel (once/week)",
+              "Apply collagen-boosting mask",
+              "Facial massage for circulation",
+            ],
+            products: [
+              {
+                name: "Vitamin C serum",
+                purplleLink: "https://www.purplle.com/search?q=vitamin+c+serum",
+              },
+              {
+                name: "Retinol serum",
+                purplleLink: "https://www.purplle.com/search?q=retinol+serum",
+              },
+              {
+                name: "Peptide moisturizer",
+                purplleLink:
+                  "https://www.purplle.com/search?q=peptide+moisturizer",
+              },
+              {
+                name: "Eye cream",
+                purplleLink: "https://www.purplle.com/search?q=eye+cream",
+              },
+              {
+                name: "SPF 50 sunscreen",
+                purplleLink:
+                  "https://www.purplle.com/search?q=spf+50+sunscreen",
+              },
+              {
+                name: "AHA peel",
+                purplleLink: "https://www.purplle.com/search?q=aha+peel",
+              },
+              {
+                name: "Collagen mask",
+                purplleLink: "https://www.purplle.com/search?q=collagen+mask",
+              },
+            ],
+            tips: "Start retinol slowly, always wear sunscreen, sleep on silk pillowcase",
+          },
+          pores: {
+            title: "🔍 Large Pores Routine",
+            description: "Minimize appearance of large pores",
+            morning: [
+              "Cleanse with salicylic acid wash",
+              "Apply niacinamide serum",
+              "Use oil-free mattifying moisturizer",
+              "Apply primer before makeup",
+            ],
+            night: [
+              "Double cleanse thoroughly",
+              "Use salicylic acid toner",
+              "Apply retinol (3x/week)",
+              "Use lightweight night cream",
+            ],
+            weekly: [
+              "Use clay mask (2x/week)",
+              "Professional extraction (don't DIY)",
+              "Exfoliate with BHA",
+            ],
+            products: [
+              {
+                name: "Salicylic acid cleanser",
+                purplleLink:
+                  "https://www.purplle.com/search?q=salicylic+acid+cleanser",
+              },
+              {
+                name: "Niacinamide serum",
+                purplleLink:
+                  "https://www.purplle.com/search?q=niacinamide+serum",
+              },
+              {
+                name: "Salicylic acid toner",
+                purplleLink:
+                  "https://www.purplle.com/search?q=salicylic+acid+toner",
+              },
+              {
+                name: "Retinol serum",
+                purplleLink: "https://www.purplle.com/search?q=retinol+serum",
+              },
+              {
+                name: "Clay mask",
+                purplleLink: "https://www.purplle.com/search?q=clay+mask",
+              },
+              {
+                name: "Mattifying moisturizer",
+                purplleLink:
+                  "https://www.purplle.com/search?q=mattifying+moisturizer",
+              },
+              {
+                name: "Pore primer",
+                purplleLink: "https://www.purplle.com/search?q=pore+primer",
+              },
+            ],
+            tips: "Keep pores clean, never squeeze, use cold water rinse",
+          },
+          sensitive: {
+            title: "🌸 Sensitive Skin Routine",
+            description: "Gentle care for reactive skin",
+            morning: [
+              "Cleanse with gentle, fragrance-free cleanser",
+              "Apply soothing centella asiatica serum",
+              "Use fragrance-free moisturizer",
+              "Apply mineral sunscreen (zinc oxide)",
+            ],
+            night: [
+              "Cleanse with micellar water + gentle cleanser",
+              "Apply calming cream with ceramides",
+              "Use cica (centella) cream",
+              "Avoid active ingredients if irritated",
+            ],
+            weekly: [
+              "Patch test new products",
+              "Use calming sheet mask",
+              "Avoid exfoliants when skin is reactive",
+            ],
+            products: [
+              {
+                name: "Gentle cleanser",
+                purplleLink: "https://www.purplle.com/search?q=gentle+cleanser",
+              },
+              {
+                name: "Centella asiatica serum",
+                purplleLink:
+                  "https://www.purplle.com/search?q=centella+asiatica+serum",
+              },
+              {
+                name: "Fragrance-free moisturizer",
+                purplleLink:
+                  "https://www.purplle.com/search?q=fragrance+free+moisturizer",
+              },
+              {
+                name: "Mineral sunscreen",
+                purplleLink:
+                  "https://www.purplle.com/search?q=mineral+sunscreen",
+              },
+              {
+                name: "Cica cream",
+                purplleLink: "https://www.purplle.com/search?q=cica+cream",
+              },
+              {
+                name: "Micellar water",
+                purplleLink: "https://www.purplle.com/search?q=micellar+water",
+              },
+              {
+                name: "Calming sheet mask",
+                purplleLink:
+                  "https://www.purplle.com/search?q=calming+sheet+mask",
+              },
+            ],
+            tips: "Introduce one product at a time, avoid fragrance and alcohol, keep routine simple",
+          },
+        };
+
+        // ---------- ENHANCED HAIR ADVICE WITH COMPLETE ROUTINES ----------
+        const hairAdvice = {
+          hairfall: {
+            title: "🍂 Hair Fall & Thinning Routine",
+            description: "Strengthen hair and reduce shedding",
+            routine: [
+              "Use mild protein shampoo 2-3 times a week",
+              "Apply biotin/caffeine serum to scalp daily",
+              "Massage warm coconut/rosemary oil twice weekly",
+              "Take biotin supplements and protein-rich diet",
+              "Avoid tight hairstyles and heat styling",
+            ],
+            products: [
+              {
+                name: "Protein shampoo",
+                purplleLink: "https://www.purplle.com/search?q=protein+shampoo",
+              },
+              {
+                name: "Biotin serum",
+                purplleLink: "https://www.purplle.com/search?q=biotin+serum",
+              },
+              {
+                name: "Coconut oil",
+                purplleLink: "https://www.purplle.com/search?q=coconut+oil",
+              },
+              {
+                name: "Rosemary oil",
+                purplleLink: "https://www.purplle.com/search?q=rosemary+oil",
+              },
+              {
+                name: "Biotin supplements",
+                purplleLink:
+                  "https://www.purplle.com/search?q=biotin+supplements",
+              },
+              {
+                name: "Caffeine shampoo",
+                purplleLink:
+                  "https://www.purplle.com/search?q=caffeine+shampoo",
+              },
+              {
+                name: "Wide-tooth comb",
+                purplleLink: "https://www.purplle.com/search?q=wide+tooth+comb",
+              },
+            ],
+            tips: "Reduce stress, get enough sleep, don't brush wet hair",
+          },
+          splitends: {
+            title: "✂️ Split Ends & Breakage Routine",
+            description: "Prevent and manage split ends",
+            routine: [
+              "Get trim every 6-8 weeks",
+              "Use leave-in conditioner after wash",
+              "Apply argan/serum to ends daily",
+              "Use heat protectant before styling",
+              "Sleep on silk pillowcase",
+            ],
+            products: [
+              {
+                name: "Leave-in conditioner",
+                purplleLink:
+                  "https://www.purplle.com/search?q=leave-in+conditioner",
+              },
+              {
+                name: "Argan oil serum",
+                purplleLink: "https://www.purplle.com/search?q=argan+oil+serum",
+              },
+              {
+                name: "Heat protectant spray",
+                purplleLink: "https://www.purplle.com/search?q=heat+protectant",
+              },
+              {
+                name: "Silk pillowcase",
+                purplleLink: "https://www.purplle.com/search?q=silk+pillowcase",
+              },
+              {
+                name: "Hair mask",
+                purplleLink: "https://www.purplle.com/search?q=hair+mask",
+              },
+              {
+                name: "Wide-tooth comb",
+                purplleLink: "https://www.purplle.com/search?q=wide+tooth+comb",
+              },
+            ],
+            tips: "Don't rub wet hair with towel, air dry when possible",
+          },
+          dandruff: {
+            title: "❄️ Dandruff & Itchy Scalp Routine",
+            description: "Eliminate flakes and soothe scalp",
+            routine: [
+              "Use ketoconazole/zinc shampoo 2-3x week",
+              "Apply tea tree oil (diluted) before shower",
+              "Use gentle conditioner (avoid scalp)",
+              "Try salicylic acid scalp treatment",
+              "Don't scratch - use scalp massager",
+            ],
+            products: [
+              {
+                name: "Ketoconazole shampoo",
+                purplleLink:
+                  "https://www.purplle.com/search?q=ketoconazole+shampoo",
+              },
+              {
+                name: "Zinc pyrithione shampoo",
+                purplleLink:
+                  "https://www.purplle.com/search?q=zinc+pyrithione+shampoo",
+              },
+              {
+                name: "Tea tree oil",
+                purplleLink: "https://www.purplle.com/search?q=tea+tree+oil",
+              },
+              {
+                name: "Scalp brush",
+                purplleLink: "https://www.purplle.com/search?q=scalp+brush",
+              },
+              {
+                name: "Salicylic acid scalp lotion",
+                purplleLink:
+                  "https://www.purplle.com/search?q=salicylic+acid+scalp+lotion",
+              },
+              {
+                name: "Apple cider vinegar rinse",
+                purplleLink:
+                  "https://www.purplle.com/search?q=apple+cider+vinegar+rinse",
+              },
+            ],
+            tips: "Wash hair regularly, avoid stress, limit styling products",
+          },
+          dryscalp: {
+            title: "🏜️ Dry Scalp Routine",
+            description: "Hydrate and soothe dry scalp",
+            routine: [
+              "Use moisturizing sulfate-free shampoo",
+              "Apply aloe vera to scalp (20 min before wash)",
+              "Use hydrating conditioner",
+              "Massage coconut/almond oil overnight weekly",
+              "Avoid hot water showers",
+            ],
+            products: [
+              {
+                name: "Moisturizing shampoo",
+                purplleLink:
+                  "https://www.purplle.com/search?q=moisturizing+shampoo",
+              },
+              {
+                name: "Aloe vera gel",
+                purplleLink: "https://www.purplle.com/search?q=aloe+vera+gel",
+              },
+              {
+                name: "Hydrating conditioner",
+                purplleLink:
+                  "https://www.purplle.com/search?q=hydrating+conditioner",
+              },
+              {
+                name: "Coconut oil",
+                purplleLink: "https://www.purplle.com/search?q=coconut+oil",
+              },
+              {
+                name: "Scalp serum hyaluronic acid",
+                purplleLink:
+                  "https://www.purplle.com/search?q=scalp+serum+hyaluronic+acid",
+              },
+              {
+                name: "Jojoba oil",
+                purplleLink: "https://www.purplle.com/search?q=jojoba+oil",
+              },
+            ],
+            tips: "Drink plenty water, use humidifier, limit heat styling",
+          },
+          "oily scalp": {
+            title: "💧 Oily Scalp Routine",
+            description: "Control excess oil and sebum",
+            routine: [
+              "Use clarifying shampoo 2-3x week",
+              "Apply apple cider vinegar rinse",
+              "Use dry shampoo between washes",
+              "Avoid over-washing (strips oils)",
+              "Keep brushes clean",
+            ],
+            products: [
+              {
+                name: "Clarifying shampoo",
+                purplleLink:
+                  "https://www.purplle.com/search?q=clarifying+shampoo",
+              },
+              {
+                name: "Dry shampoo",
+                purplleLink: "https://www.purplle.com/search?q=dry+shampoo",
+              },
+              {
+                name: "Apple cider vinegar rinse",
+                purplleLink:
+                  "https://www.purplle.com/search?q=apple+cider+vinegar+rinse",
+              },
+              {
+                name: "Tea tree shampoo",
+                purplleLink:
+                  "https://www.purplle.com/search?q=tea+tree+shampoo",
+              },
+              {
+                name: "Scalp scrub",
+                purplleLink: "https://www.purplle.com/search?q=scalp+scrub",
+              },
+            ],
+            tips: "Don't touch scalp frequently, wash brushes weekly",
+          },
+          frizz: {
+            title: "🌀 Frizz & Unmanageable Hair Routine",
+            description: "Tame frizz and add shine",
+            routine: [
+              "Use sulfate-free moisturizing shampoo",
+              "Apply leave-in conditioner on damp hair",
+              "Use anti-frizz serum",
+              "Air dry or use diffuser",
+              "Sleep on silk pillowcase",
+            ],
+            products: [
+              {
+                name: "Sulfate-free shampoo",
+                purplleLink:
+                  "https://www.purplle.com/search?q=sulfate+free+shampoo",
+              },
+              {
+                name: "Leave-in conditioner",
+                purplleLink:
+                  "https://www.purplle.com/search?q=leave-in+conditioner",
+              },
+              {
+                name: "Anti-frizz serum",
+                purplleLink:
+                  "https://www.purplle.com/search?q=anti+frizz+serum",
+              },
+              {
+                name: "Hair oil",
+                purplleLink: "https://www.purplle.com/search?q=hair+oil",
+              },
+              {
+                name: "Silk pillowcase",
+                purplleLink: "https://www.purplle.com/search?q=silk+pillowcase",
+              },
+              {
+                name: "Microfiber towel",
+                purplleLink:
+                  "https://www.purplle.com/search?q=microfiber+towel",
+              },
+            ],
+            tips: "Don't rub hair dry, use cold water rinse, avoid humidity",
+          },
+          damage: {
+            title: "🔥 Damaged & Over-processed Hair Routine",
+            description: "Repair and restore hair health",
+            routine: [
+              "Use bond-repairing shampoo/conditioner",
+              "Apply protein treatment weekly",
+              "Use deep conditioning mask",
+              "Avoid heat styling completely",
+              "Get regular trims",
+            ],
+            products: [
+              {
+                name: "Bond repair shampoo",
+                purplleLink:
+                  "https://www.purplle.com/search?q=bond+repair+shampoo",
+              },
+              {
+                name: "Protein treatment",
+                purplleLink:
+                  "https://www.purplle.com/search?q=protein+treatment",
+              },
+              {
+                name: "Deep conditioning mask",
+                purplleLink:
+                  "https://www.purplle.com/search?q=deep+conditioning+mask",
+              },
+              {
+                name: "Heat protectant",
+                purplleLink: "https://www.purplle.com/search?q=heat+protectant",
+              },
+              {
+                name: "Hair oil serum",
+                purplleLink: "https://www.purplle.com/search?q=hair+oil+serum",
+              },
+            ],
+            tips: "Give hair break from coloring, trim regularly, be patient",
+          },
+          growth: {
+            title: "🌱 Hair Growth Routine",
+            description: "Stimulate healthy hair growth",
+            routine: [
+              "Scalp massage with rosemary oil (5 min daily)",
+              "Use minoxidil if recommended",
+              "Take biotin and vitamin supplements",
+              "Eat protein-rich diet",
+              "Avoid tight hairstyles",
+            ],
+            products: [
+              {
+                name: "Rosemary oil",
+                purplleLink: "https://www.purplle.com/search?q=rosemary+oil",
+              },
+              {
+                name: "Biotin supplements",
+                purplleLink:
+                  "https://www.purplle.com/search?q=biotin+supplements",
+              },
+              {
+                name: "Scalp massager",
+                purplleLink: "https://www.purplle.com/search?q=scalp+massager",
+              },
+              {
+                name: "Growth serum",
+                purplleLink:
+                  "https://www.purplle.com/search?q=hair+growth+serum",
+              },
+              {
+                name: "Castor oil",
+                purplleLink: "https://www.purplle.com/search?q=castor+oil",
+              },
+              {
+                name: "Minoxidil",
+                purplleLink: "https://www.purplle.com/search?q=minoxidil",
+              },
+            ],
+            tips: "Be consistent, reduce stress, get enough sleep and protein",
+          },
+        };
+
+        // DOM elements for skin/hair
+        const skinSelect = document.getElementById("skinSelect");
+        const hairSelect = document.getElementById("hairSelect");
+        const skinAdviceDiv = document.getElementById("skinAdvice");
+        const hairAdviceDiv = document.getElementById("hairAdvice");
+        const skinProductInfo = document.getElementById("skinProductInfo");
+        const hairProductInfo = document.getElementById("hairProductInfo");
+
+        function renderSkinAdvice(key) {
+          if (!key || !skinAdvice[key]) {
+            skinAdviceDiv.innerHTML =
+              '<p style="color:#2b6b56; text-align: center; padding: 1rem;">👆 Select a concern above to see a complete step-by-step routine and recommended products.</p>';
+            return;
+          }
+          const item = skinAdvice[key];
+          let html = `
+            <div style="background: #fff5e9; border-radius: 1.5rem; padding: 1.5rem;">
+              <h3 style="color: #1e5945; margin-bottom: 0.5rem;">${
+                item.title
+              }</h3>
+              <p style="color: #2d5e4c; margin-bottom: 1.5rem;">${
+                item.description
+              }</p>
+              
+              <div style="background: #e5f4ee; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem;">
+                <h4 style="color: #1e5945;">☀️ Morning Routine</h4>
+                <ol style="margin-left: 1.2rem; color: #2d5e4c;">
+                  ${item.morning
+                    .map(
+                      (step) =>
+                        `<li style="margin-bottom: 0.3rem;">${step}</li>`
+                    )
+                    .join("")}
+                </ol>
+              </div>
+              
+              <div style="background: #e0eef5; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem;">
+                <h4 style="color: #1e5945;">🌙 Night Routine</h4>
+                <ol style="margin-left: 1.2rem; color: #2d5e4c;">
+                  ${item.night
+                    .map(
+                      (step) =>
+                        `<li style="margin-bottom: 0.3rem;">${step}</li>`
+                    )
+                    .join("")}
+                </ol>
+              </div>
+              
+              <div style="background: #f0e6d2; border-radius: 1rem; padding: 1rem; margin-bottom: 1.5rem;">
+                <h4 style="color: #1e5945;">�� Weekly Treatments</h4>
+                <ul style="margin-left: 1.2rem; color: #2d5e4c;">
+                  ${item.weekly
+                    .map(
+                      (step) =>
+                        `<li style="margin-bottom: 0.3rem;">${step}</li>`
+                    )
+                    .join("")}
+                </ul>
+              </div>
+              
+              <div style="background: #ffe2d6; border-radius: 1rem; padding: 1rem; margin-bottom: 1.5rem;">
+                <h4 style="color: #1e5945;">💡 Pro Tips</h4>
+                <p style="color: #2d5e4c;">${item.tips}</p>
+              </div>
+              
+              <h4 style="color: #1e5945; margin-bottom: 1rem;">🛍️ Recommended Products</h4>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem;">
+          `;
+
+          item.products.forEach((prod) => {
+            html += `
+              <div style="background: white; border-radius: 1rem; padding: 0.8rem; text-align: center; border: 1px solid #9bc6b6;">
+                <span style="font-weight: 600; color: #1e5945; font-size: 0.9rem;">${prod.name}</span>
+                <button onclick="window.open('${prod.purplleLink}', '_blank')" style="background: #3f7b66; color: white; border: none; padding: 0.3rem 0.8rem; border-radius: 20px; margin-top: 0.5rem; cursor: pointer; font-size: 0.8rem;">View on Purplle</button>
+              </div>
+            `;
+          });
+
+          html += `
+              </div>
+            </div>
+          `;
+
+          skinAdviceDiv.innerHTML = html;
+        }
+
+        function renderHairAdvice(key) {
+          if (!key || !hairAdvice[key]) {
+            hairAdviceDiv.innerHTML =
+              '<p style="color:#2b6b56; text-align: center; padding: 1rem;">👆 Select a concern above to see a complete hair care routine and recommended products.</p>';
+            return;
+          }
+          const item = hairAdvice[key];
+          let html = `
+            <div style="background: #f0ecf9; border-radius: 1.5rem; padding: 1.5rem;">
+              <h3 style="color: #1e5945; margin-bottom: 0.5rem;">${
+                item.title
+              }</h3>
+              <p style="color: #2d5e4c; margin-bottom: 1.5rem;">${
+                item.description
+              }</p>
+              
+              <div style="background: #e5d9f2; border-radius: 1rem; padding: 1rem; margin-bottom: 1.5rem;">
+                <h4 style="color: #1e5945;">📋 Step-by-Step Routine</h4>
+                <ol style="margin-left: 1.2rem; color: #2d5e4c;">
+                  ${item.routine
+                    .map(
+                      (step) =>
+                        `<li style="margin-bottom: 0.5rem;">${step}</li>`
+                    )
+                    .join("")}
+                </ol>
+              </div>
+              
+              <div style="background: #ffe2d6; border-radius: 1rem; padding: 1rem; margin-bottom: 1.5rem;">
+                <h4 style="color: #1e5945;">💡 Pro Tips</h4>
+                <p style="color: #2d5e4c;">${item.tips}</p>
+              </div>
+              
+              <h4 style="color: #1e5945; margin-bottom: 1rem;">🛍️ Recommended Products</h4>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem;">
+          `;
+
+          item.products.forEach((prod) => {
+            html += `
+              <div style="background: white; border-radius: 1rem; padding: 0.8rem; text-align: center; border: 1px solid #9bc6b6;">
+                <span style="font-weight: 600; color: #1e5945; font-size: 0.9rem;">${prod.name}</span>
+                <button onclick="window.open('${prod.purplleLink}', '_blank')" style="background: #3f7b66; color: white; border: none; padding: 0.3rem 0.8rem; border-radius: 20px; margin-top: 0.5rem; cursor: pointer; font-size: 0.8rem;">View on Purplle</button>
+              </div>
+            `;
+          });
+
+          html += `
+              </div>
+            </div>
+          `;
+
+          hairAdviceDiv.innerHTML = html;
+        }
+
+        skinSelect.addEventListener("change", (e) =>
+          renderSkinAdvice(e.target.value)
+        );
+        hairSelect.addEventListener("change", (e) =>
+          renderHairAdvice(e.target.value)
+        );
+
+        // ---------- INTERACTIVE WELLNESS TIPS ----------
+        const wellnessTips = [
+          {
+            title: "Morning hydration",
+            tip: "Start your day with a glass of warm water and lemon to boost metabolism.",
+          },
+          {
+            title: "Mindful eating",
+            tip: "Chew each bite 20 times to improve digestion and satisfaction.",
+          },
+          {
+            title: "Desk stretches",
+            tip: "Every hour, roll your shoulders and stretch your neck to release tension.",
+          },
+          {
+            title: "Evening walk",
+            tip: "A 15-minute walk after dinner aids digestion and lowers blood sugar.",
+          },
+          {
+            title: "Sleep routine",
+            tip: "Avoid screens 30 min before bed; try reading or meditation.",
+          },
+          {
+            title: "Snack smart",
+            tip: "Choose nuts or fruit over processed snacks for sustained energy.",
+          },
+        ];
+
+        const wellnessGrid = document.getElementById("wellnessGrid");
+        wellnessTips.forEach((item, index) => {
+          const card = document.createElement("div");
+          card.className = "wellness-card";
+          card.innerHTML = `<h4>✨ ${item.title}</h4><p id="wellness-${index}" style="display:none;">${item.tip}</p>`;
+          card.addEventListener("click", () => {
+            const tipPara = card.querySelector("p");
+            if (tipPara.style.display === "none") {
+              tipPara.style.display = "block";
+            } else {
+              tipPara.style.display = "none";
+            }
+          });
+          wellnessGrid.appendChild(card);
+        });
+
+        // Weight guidance logic (south indian meals, tracker, sms)
+        const form = document.getElementById("healthForm");
+        const errorDiv = document.getElementById("formError");
+        const resultCard = document.getElementById("resultCard");
+        const bmiBadge = document.getElementById("bmiBadge");
+        const bmiValue = document.getElementById("bmiValue");
+        const bmiClass = document.getElementById("bmiClass");
+        const calorieTarget = document.getElementById("calorieTarget");
+        const maintenanceInfo = document.getElementById("maintenanceInfo");
+        const weightRange = document.getElementById("weightRange");
+        const dietSuggest = document.getElementById("dietSuggest");
+        const exerciseSuggest = document.getElementById("exerciseSuggest");
+        const lifestyleElem = document.getElementById("lifestyleTips");
+        const weeklyContainer = document.getElementById("weeklyMealContainer");
+        const doctorContainer = document.getElementById("doctorContainer");
+        const trackerDaysDiv = document.getElementById("trackerDays");
+        const progressSpan = document.getElementById("progressCount");
+        const resetBtn = document.getElementById("resetTrackerBtn");
+        const smsPhoneInput = document.getElementById("smsPhone");
+        const activateSmsBtn = document.getElementById("activateSmsBtn");
+        const smsStatus = document.getElementById("smsStatus");
+        const smsMessage = document.getElementById("smsMessage");
+
+        function getSouthIndianWeekly(goal, foodPref) {
+          if (goal === "gain" && foodPref === "veg")
+            return southIndianMeals.gainVeg;
+          if (goal === "lose" && foodPref === "veg")
+            return southIndianMeals.loseVeg;
+          if (goal === "gain" && foodPref === "nonveg")
+            return southIndianMeals.gainNonVeg;
+          if (goal === "lose" && foodPref === "nonveg")
+            return southIndianMeals.loseNonVeg;
+          return southIndianMeals.loseVeg;
+        }
+
+        function renderWeeklyPlan(weeklyPlan) {
+          weeklyContainer.innerHTML = "";
+          const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+          weeklyPlan.forEach((day, i) => {
+            const card = document.createElement("div");
+            card.className = "day-card";
+            card.innerHTML = `<strong>${days[i]}</strong><div class="day-meal"><span>B:</span> ${day.breakfast}</div><div class="day-meal"><span>L:</span> ${day.lunch}</div><div class="day-meal"><span>S:</span> ${day.snack}</div><div class="day-meal"><span>D:</span> ${day.dinner}</div>`;
+            weeklyContainer.appendChild(card);
+          });
+        }
+
+        function renderDoctors() {
+          const docs = [
+            {
+              name: "Dr. Meera Sharma",
+              speciality: "Nutritionist",
+              distance: "1.2 km",
+              clinic: "Green Health",
+              avatar: "M",
+            },
+            {
+              name: "Dr. James Carter",
+              speciality: "Dietitian",
+              distance: "2.5 km",
+              clinic: "Wellness Hub",
+              avatar: "J",
+            },
+            {
+              name: "Dr. Priya Kapoor",
+              speciality: "Bariatric",
+              distance: "0.8 km",
+              clinic: "Vitalife",
+              avatar: "P",
+            },
+            {
+              name: "Dr. Robert Chen",
+              speciality: "Sports med",
+              distance: "3.0 km",
+              clinic: "ActiveLife",
+              avatar: "R",
+            },
+          ];
+          doctorContainer.innerHTML = docs
+            .map((d) => {
+              return `<div class="doctor-card"><div class="doctor-avatar">${d.avatar}</div><div class="doctor-info"><p>${d.name}</p><div class="speciality">${d.speciality} · ${d.distance}</div><div class="speciality">${d.clinic}</div></div></div>`;
+            })
+            .join("");
+        }
+
+        function renderTracker() {
+          const days = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ];
+          trackerDaysDiv.innerHTML = "";
+          days.forEach((day, i) => {
+            const div = document.createElement("div");
+            div.className = "tracker-day";
+            const chk = document.createElement("input");
+            chk.type = "checkbox";
+            chk.id = `dayChk_${i}`;
+            chk.addEventListener("change", updateProgress);
+            const lbl = document.createElement("label");
+            lbl.htmlFor = `dayChk_${i}`;
+            lbl.textContent = day;
+            div.appendChild(chk);
+            div.appendChild(lbl);
+            trackerDaysDiv.appendChild(div);
+          });
+          updateProgress();
+          resetBtn.onclick = () => {
+            document
+              .querySelectorAll("#trackerDays input")
+              .forEach((c) => (c.checked = false));
+            updateProgress();
+          };
+        }
+
+        function updateProgress() {
+          const checks = document.querySelectorAll("#trackerDays input");
+          const cnt = Array.from(checks).filter((c) => c.checked).length;
+          progressSpan.textContent = cnt + "/7";
+        }
+
+        let smsActive = false;
+        let smsPhoneNumber = "";
+        activateSmsBtn.addEventListener("click", () => {
+          const phone = smsPhoneInput.value.trim();
+          const digits = phone.replace(/\D/g, "");
+          if (digits.length < 10 || digits.length > 15) {
+            alert("Please enter a valid phone number (10-15 digits)");
+            return;
+          }
+          smsPhoneNumber = phone;
+          smsActive = true;
+          smsStatus.style.display = "flex";
+          smsMessage.innerText = `✅ Daily 7am SMS reminder active for ${phone}. (simulated)`;
+          localStorage.setItem("bloomSmsPhone", phone);
+          startSmsScheduler();
+        });
+
+        function startSmsScheduler() {
+          if (!smsActive) return;
+          if (window.smsInterval) clearInterval(window.smsInterval);
+          window.smsInterval = setInterval(() => {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            if (hour === 7 && minute >= 0 && minute < 5) {
+              const today = now.toDateString();
+              const lastSent = localStorage.getItem("lastSmsSent");
+              if (lastSent !== today) {
+                console.log(
+                  `📲 SMS to ${smsPhoneNumber}: "Bloom & Balance: Good morning! Here's your meal reminder – check your weekly plan."`
+                );
+                alert(`[SIMULATED] 7am SMS sent to ${smsPhoneNumber}`);
+                localStorage.setItem("lastSmsSent", today);
+                smsMessage.innerText = `✅ Last reminder sent at ${now.toLocaleTimeString()} to ${smsPhoneNumber}`;
+              }
+            }
+          }, 60000);
+        }
+
+        const savedPhone = localStorage.getItem("bloomSmsPhone");
+        if (savedPhone) {
+          smsPhoneInput.value = savedPhone;
+          smsPhoneNumber = savedPhone;
+          smsActive = true;
+          smsStatus.style.display = "flex";
+          smsMessage.innerText = `✅ Daily 7am SMS reminder active for ${savedPhone}. (simulated)`;
+          startSmsScheduler();
+        }
+
+        function validateInputs(
+          age,
+          height,
+          weight,
+          gender,
+          activity,
+          foodPref,
+          goal
+        ) {
+          if (
+            !age ||
+            !height ||
+            !weight ||
+            !gender ||
+            !activity ||
+            !foodPref ||
+            !goal
+          )
+            return "Fill all fields";
+          if (age < 1 || age > 120) return "Invalid age";
+          if (height < 50 || height > 250) return "Invalid height";
+          if (weight < 10 || weight > 300) return "Invalid weight";
+          return null;
+        }
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const age = parseInt(document.getElementById("age").value);
+          const height = parseFloat(document.getElementById("height").value);
+          const weight = parseFloat(document.getElementById("weight").value);
+          const gender = document.getElementById("gender").value;
+          const activity = document.getElementById("activity").value;
+          const foodPref = document.getElementById("foodPref").value;
+          const goalElem = document.querySelector('input[name="goal"]:checked');
+          const goal = goalElem ? goalElem.value : null;
+          const err = validateInputs(
+            age,
+            height,
+            weight,
+            gender,
+            activity,
+            foodPref,
+            goal
+          );
+          if (err) {
+            errorDiv.style.display = "flex";
+            errorDiv.textContent = err;
+            return;
+          }
+          errorDiv.style.display = "none";
+
+          const hM = height / 100;
+          const bmi = (weight / (hM * hM)).toFixed(1);
+          let cat =
+            bmi < 18.5
+              ? "Underweight"
+              : bmi < 25
+              ? "Normal"
+              : bmi < 30
+              ? "Overweight"
+              : "Obese";
+          let bmr =
+            gender === "male"
+              ? 10 * weight + 6.25 * height - 5 * age + 5
+              : 10 * weight + 6.25 * height - 5 * age - 161;
+          let mult =
+            activity === "low" ? 1.2 : activity === "moderate" ? 1.55 : 1.725;
+          let maint = Math.round(bmr * mult);
+          let target = goal === "gain" ? maint + 300 : maint - 300;
+          if (target < 1200) target = 1200;
+          let minW = (18.5 * hM * hM).toFixed(1),
+            maxW = (24.9 * hM * hM).toFixed(1);
+          let diet =
+            foodPref === "veg"
+              ? goal === "gain"
+                ? "🥑 nuts,dairy"
+                : "🥗 leafy greens"
+              : goal === "gain"
+              ? "🍗 lean meats"
+              : "🐟 grilled fish";
+          let exercise = goal === "gain" ? "🏋️ strength 4x" : "🚴 cardio 4x";
+          let lifestyle = "💤 7-9h sleep, 2-3L water.";
+          if (cat === "Underweight" && goal === "gain")
+            lifestyle += " Eat frequently.";
+          if (cat === "Obese" && goal === "lose")
+            lifestyle += " Portion control.";
+
+          const weekly = getSouthIndianWeekly(goal, foodPref);
+          renderWeeklyPlan(weekly);
+          renderDoctors();
+          renderTracker();
+
+          bmiBadge.textContent = `BMI ${bmi}`;
+          bmiValue.innerHTML = `<span class="highlight">BMI = ${bmi}</span>`;
+          bmiClass.textContent = `Classification: ${cat}`;
+          calorieTarget.innerHTML = `<span class="highlight">${target} kcal/day</span>`;
+          maintenanceInfo.textContent = `Maintenance: ~${maint} kcal`;
+          weightRange.textContent = `${minW} kg – ${maxW} kg`;
+          dietSuggest.textContent = diet;
+          exerciseSuggest.textContent = exercise;
+          lifestyleElem.textContent = lifestyle;
+
+          resultCard.style.display = "block";
+          resultCard.scrollIntoView({ behavior: "smooth" });
+        });
+
+        renderDoctors();
+      })();
+    </script>
+  </body>
+</html>
